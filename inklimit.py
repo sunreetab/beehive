@@ -24,7 +24,15 @@ def ink_limit_proportional(
     inkLimit = inkLimit / 100.  # range is 0. to 4.
     cmyks = arr / 255.          # range is 0. to 1.
     totals = np.sum(cmyks, axis=-1, keepdims=True)
-    # TODO: implement proportional reduction here
+    # for channel in range(arr.shape[-1]):
+    #     channel_img = cmyks[:,:, channel]
+    #     saturation = saturation + np.sum(channel_img)
+    factor = np.sum(totals)/arr.shape[0]/arr.shape[1]/inkLimit
+    print(factor)
+    print(np.sum(cmyks))
+    if factor > 1:
+        cmyks = cmyks/10
+    print(np.sum(cmyks))
     return (cmyks * 255.).astype(np.uint8)
 
 
